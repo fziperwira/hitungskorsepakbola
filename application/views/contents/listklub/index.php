@@ -84,6 +84,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 			<form id="formtambahklub">
+				<input type="hidden" id="id_klub" name="id_klub">
                 <div class="modal-header">
                     <h4 class="modal-title" id="title"></h4>
                 </div>

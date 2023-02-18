@@ -17,6 +17,9 @@
 <script src="<?= base_url(); ?>/public/plugins/sweetalert2/sweetalert2.min.js"></script>
 
 <script>
+var save_method; //for save method string
+var url;
+
 $(function () {
     $("#t_daftar_klub").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -24,55 +27,15 @@ $(function () {
     }).buttons().container().appendTo('#t_daftar_klub_wrapper .col-md-6:eq(0)');
 });
 
-$(document).on('click', '#btnTambahKlub', function(e) {
-    e.preventDefault();
-    save_method = 'add';
-    $("#title").text("Form Input Klub Bola");
-    $('[name="nama_klub"]').val('');
-    $('[name="kota_klub"]').val('');
-    $('[name="detail"]').val('');
-    $('#ModalTambahKlub').modal('show');
-});
-
 function reload_table() {
     table.ajax.reload(null, false); //reload datatable ajax 
 }
 
-$(document).on("submit", "#formtambahklub", function(event) {
-        event.preventDefault();
-        $('#btnSave').text("Tunggu...");
-        $('#btnSave').prop('disabled', true);
-        $.ajax({
-            type: "POST",
-            url: "<?= site_url('ListKlub/ajax_add') ?>",
-            dataType: "JSON",
-            data: new FormData(this),
-            processData: false,
-            contentType: false,
-            success: function(res) {
-                if (res.status === true) {
-                    $('#btnSave').text("Save");
-                    Swal.fire(
-                        'Sukses',
-                        'Berhasil menambahkan data!',
-                        'success'
-                    )
-                    } else {
-                        Swal.fire(
-                            'Gagal',
-                            '' + res.msg + '',
-                            'error'
-                        )
-                        $('#btnSave').text("Menyimpan");
-                        $('#btnSave').prop('disabled', false);
-                    }
-                    $('#ModalTambahKlub').modal('hide');
-                    setTimeout(() => {
-                                window.location.reload();
-                            }, 3000);
-            }
-        });
-        return false;
+$(document).on('click', '#btnTambahKlub', function(e) {
+    e.preventDefault();
+    save_method = 'add';
+    $("#title").text("Form Input Klub Bola");
+    $('#ModalTambahKlub').modal('show');
 });
 
 function EditKlubBola(id) {
@@ -101,6 +64,70 @@ function EditKlubBola(id) {
         }
     });
 }
+
+$(document).on("submit", "#formtambahklub", function(event) {
+// function save() {
+    $('#btnSave').text('menyimpan...'); //change button text
+    $('#btnSave').attr('disabled', true); //set button disable 
+    var url;
+    if (save_method == 'add') {
+        if ($('#nama_klub').length !== "" &&
+            $('#kota_klub').length !== ""){
+                url = "<?= site_url('ListKlub/ajax_add') ?>";
+                Swal.fire(
+                    'Sukses',
+                    'Berhasil menambahkan data!',
+                    'success'
+                )
+                setTimeout(() => {
+                window.location.reload();
+                }, 5000);
+            }
+        } else {
+            if ($('#nama_klub').length !== 0 &&
+                $('#kota_klub').length !== 0) {
+                url = "<?= site_url('ListKlub/ajax_update') ?>";
+                Swal.fire(
+                    'Sukses',
+                    'Berhasil mengubah data!',
+                    'success'
+                )
+                setTimeout(() => {
+                window.location.reload();
+                }, 10000);
+            }
+        }
+        // ajax adding data to database
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: $('#formtambahklub').serialize(),
+            dataType: "JSON",
+            success: function(data) {
+                if (data.status === true) //if success close modal and reload ajax table
+                {
+                    // $('#ModalTambahKlub').modal('hide');
+                    // reload_table();
+                    $('#nama_klub').val("");
+                    $('#kota_klub').val("");
+                    $('#detail').val("");
+                    // window.location.reload();
+                }
+                $('#btnSave').text('simpan'); //change button text
+                $('#btnSave').attr('disabled', false); //set button enable 
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Swal.fire(
+                    'Gagal menyimpan data',
+                    'Mohon isikan form dengan benar!',
+                    'error'
+                )
+                $('#btnSave').text('simpan'); //change button text
+                $('#btnSave').attr('disabled', false); //set button enable 
+            }
+        });
+});
+// }
 
 function DeleteKlubBola(id) {
     Swal.fire({
@@ -134,7 +161,7 @@ function DeleteKlubBola(id) {
             });
 
         }
-});
-return false;
+    });
+    return false;
 }
 </script>
