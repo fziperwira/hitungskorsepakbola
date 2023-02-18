@@ -14,5 +14,5 @@
             <!-- Theme style -->
             <link rel="stylesheet" href="<?= base_url(); ?>/public/dist/css/adminlte.min.css">
         </head>
-    <body class="hold-transition layout-top-nav">
+    <body class="hold-transition layout-top-nav layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">

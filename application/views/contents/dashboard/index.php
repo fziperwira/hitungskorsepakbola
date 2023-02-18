@@ -1,21 +1,4 @@
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
-    <div class="container">
-      <a href="" class="navbar-brand">
-        <img src="<?= base_url(); ?>/public/dist/img/rspb1.png" alt="AdminLTE Logo" class="brand-image elevation-2">
-        <span class="brand-text font-weight-light">Rekap Skor Pertandingan Bola</span>
-      </a>
-
-      <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- <div class="collapse navbar-collapse order-3" id="navbarCollapse">
-    </div> -->
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -40,7 +23,7 @@
     <div class="content">
       <div class="container">
         <!-- Card -->
-        <div class="card card-primary">
+        <div class="card card-info card-outline">
                 <div class="card-header">
                 </div>
                 <!-- /.card-header -->

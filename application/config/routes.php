@@ -7,5 +7,8 @@ $route['404_override'] = 'ErrorController/index';
 $route['translate_uri_dashes'] = FALSE;
 
 //Dashboard
-$route['beranda'] = 'dashboard';
+$route['dashboard'] = 'Dashboard/index';
+
+// List Klub Sepak Bola
 $route['listklub'] = 'ListKlub/index';
+$route['editklub'] = 'ListKlub/ajax_edit';
